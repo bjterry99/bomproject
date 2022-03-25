@@ -6,6 +6,9 @@ def indexPageView(request) :
     list = scripture.objects.all()
     person = request.session.get('person')
 
+    if person is None:
+        person = 0
+
     if person > 0 :
         login = user.objects.get(user_id = person)
 
