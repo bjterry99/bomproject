@@ -32,6 +32,9 @@ def encouragementPageView(request) :
     list = list.filter(encouragement=True)
     person = request.session.get('person')
 
+    if person is None:
+        person = 0
+
     if person > 0 :
         login = user.objects.get(user_id = person)
 
@@ -54,6 +57,9 @@ def testimonyPageView(request) :
     list = scripture.objects.all()
     list = list.filter(testimony=True)
     person = request.session.get('person')
+
+    if person is None:
+        person = 0
 
     if person > 0 :
         login = user.objects.get(user_id = person)
@@ -78,6 +84,9 @@ def lowPageView(request) :
     list = list.filter(low=True)
     person = request.session.get('person')
 
+    if person is None:
+        person = 0
+
     if person > 0 :
         login = user.objects.get(user_id = person)
 
@@ -99,6 +108,9 @@ def lowPageView(request) :
 def favoritesPageView(request) :
     person = request.session.get('person')
 
+    if person is None:
+        person = 0
+
     if person > 0 :
         login = user.objects.get(user_id = person)
 
@@ -119,6 +131,8 @@ def favoritesPageView(request) :
 
 def markPageView(request, id) :
     person = request.session.get('person')
+    if person is None:
+        person = 0
     scrip = scripture.objects.get(scripture_id = id)
     peeps = user.objects.get(user_id = person)
 
@@ -137,6 +151,8 @@ def unmarkPageView(request, id) :
 
 def loginPageView(request) :
     person = request.session.get('person')
+    if person is None:
+        person = 0
 
     context = {
             'person' : person
@@ -157,6 +173,8 @@ def loginUserPageView(request) :
         person = user.objects.get(username = name)
         person = person.user_id
         request.session['person'] = person
+        if person is None:
+            person = 0
 
         return redirect('../')
     else :
@@ -168,6 +186,8 @@ def logoutPageView(request) :
 
 def createUserPageView(request) :
     person = request.session.get('person')
+    if person is None:
+        person = 0
 
     context = {
         'skip' : 0,
@@ -181,6 +201,8 @@ def createTheUserPageView(request) :
     password = request.POST['pass']
     skip = 0
     person = request.session.get('person')
+    if person is None:
+        person = 0
 
     for x in user.objects.all() :
         if x.username == name :
@@ -207,6 +229,8 @@ def createTheUserPageView(request) :
 def searchPageView(request) :
     list = scripture.objects.all()
     person = request.session.get('person')
+    if person is None:
+        person = 0
     word = request.POST['word']
 
     if person > 0 :
