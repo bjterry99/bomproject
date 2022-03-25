@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+    {% if value == 1 or value == 6%} Home
+    {% elif value == 2 %} Encouragement
+    {% elif value == 3 %} Testimony
+    {% elif value == 4 %} Low
+    {% elif value == 5 %} Favorite
+    {% endif %}
+{% endblock %}
+{% block mainblock %}
+
+<div class="container-fluid">
+    {% if value == 1 %}
+        <h1 class="mt-4">All Scriptures</h1>
+        <p>Read from a selection of helpful scriptures to support you in whatever situation you find yourself in.</p>
+        <p>Selection of scriptures provided by my lovely wife.</p>
+        {% if person > 0 %}<p>Use the side menu to select specific topics and mark FAVORITE to add scripture to the Favorites section.</p>{% endif %}
+    {% elif value == 2 %} <h1 class="mt-4 mb-4">When you need some encouragement</h1>
+    {% elif value == 3 %} <h1 class="mt-4 mb-4">When you need a testimony builder</h1>
+    {% elif value == 4 %} <h1 class="mt-4 mb-4">When you are feeling low</h1>
+    {% elif value == 5 %} 
+        <h1 class="mt-4">Marked favorites</h1>
+        {% if person > 0 %}<p>Mark NOT FAVORITE to remove from Favorites.</p>{% endif %}
+    {% elif value == 6 %} <h1 class="mt-4 mb-4">Searched for "{{word}}"</h1>
+    {% endif %}
+
+    <div class="container row gx-lg-1">
+        {% for x in scrips %}
+
+            <div class="card mb-3 mx-3 col-sm-1" style="width: 25rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{x.scripture}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ x.tip }}</h6>
+                    <p class="card-text">{{x.text|safe}}</p>
+
+                    {% if person > 0 %}
+                        {% if x in list %} <a href="{% url 'unmark' id=x.scripture_id %}" class="btn btn-danger">Not Favorite</a>
+                        {% else %} <a href="{% url 'mark' id=x.scripture_id %}" class="btn btn-primary">Favorite</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        
+        {% empty %} <h4 class="mt-4 mb-4">Sorry, no scriptures here</h4>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

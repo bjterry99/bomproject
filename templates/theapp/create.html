@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}Create Account{% endblock %}
+{% block mainblock %}
+
+<div class="container-fluid my-5">
+
+    <h2 class="mt-4">Create Account</h2>
+
+    <form class="form" name="form2" id="create" method=POST action="{% url 'createuser' %}">
+        {% csrf_token %}
+
+        <input class="form-control" id="name" type="text" name="name" maxlength="20" placeholder="Username" value=""/><br/>
+        <input class="form-control" id="pass" type="password" name="pass" maxlength="20" placeholder="Password" value=""/>
+
+        {%if skip == 1 %}
+            <p>Username already taken. Please user a different name.</p>
+        {% else %} <br/>
+        {% endif %}
+        
+        <button class="btn btn-primary" type="submit">Create Account</button>
+
+    </form>
+
+</div>
+{% endblock %}
